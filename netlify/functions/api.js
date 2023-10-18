@@ -5,10 +5,7 @@ exports.handler = async (event, context) => {
         //const data = require('./db.json');
         
 
-        const data = {
-            test: 'sadas',
-            best: "sadasd"
-        }
+        
 
         // Add CORS headers
         const headers = {
