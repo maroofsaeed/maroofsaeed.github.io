@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 exports.handler = async (event, context) => {
     if (event.httpMethod === 'GET') {
       try {
@@ -8,6 +9,9 @@ exports.handler = async (event, context) => {
         console.log(products);
         var b = JSON.parse(JSON.stringify(products));
         console.log(b);
+
+        
+        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/IsUserAuthenticated?MobileNo=0315-2020208&AccessCode=04461').then((res) => res.json());
 
         // Add CORS headers
         const headers = {
@@ -20,7 +24,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 200,
           headers,
-          body: JSON.stringify(b),
+          body: JSON.stringify(result),
         };
       } catch (error) {
         // Return an error response if there was an issue processing the request
