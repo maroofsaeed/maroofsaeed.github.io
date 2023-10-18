@@ -10,9 +10,16 @@ exports.handler = async (event, context) => {
             best: 'sadasd'
         }
 
+        // Add CORS headers
+        const headers = {
+          'Access-Control-Allow-Origin': 'https://parklane-city.com', // Replace * with the appropriate domain
+          'Access-Control-Allow-Headers': 'Content-Type',
+        };
+
         // Return the data as the response
         return {
           statusCode: 200,
+          headers,
           body: JSON.stringify(data),
         };
       } catch (error) {
