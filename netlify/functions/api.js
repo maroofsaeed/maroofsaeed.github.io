@@ -6,7 +6,7 @@ exports.handler = async (event, context) => {
         
 
         const data = {
-            test: "sadas",
+            test: 'sadas',
             best: "sadasd"
         }
 
@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 200,
           headers,
-          body: JSON.stringify(data),
+          body: JSON.stringify({"status": false, "data": [], "message": "No Records found."}),
         };
       } catch (error) {
         // Return an error response if there was an issue processing the request
