@@ -6,8 +6,8 @@ exports.handler = async (event, context) => {
         
 
         const data = {
-            test: 'sadas',
-            best: 'sadasd'
+            test: "sadas",
+            best: "sadasd"
         }
 
         // Add CORS headers
@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 200,
           headers,
-          body: data,
+          body: JSON.stringify(data),
         };
       } catch (error) {
         // Return an error response if there was an issue processing the request
