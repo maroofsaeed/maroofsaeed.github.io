@@ -13,6 +13,7 @@ exports.handler = async (event, context) => {
         const headers = {
           'Access-Control-Allow-Origin': '*', // Replace * with the appropriate domain
           'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json',
         };
 
         // Return the data as the response
