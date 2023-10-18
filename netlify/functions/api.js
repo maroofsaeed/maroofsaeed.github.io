@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
         var products = [{"name":"Pizza","price":"10","quantity":"7"}, {"name":"Cerveja","price":"12","quantity":"5"}, {"name":"Hamburguer","price":"10","quantity":"2"}, {"name":"Fraldas","price":"6","quantity":"2"}];
         console.log(products);
         var b = JSON.parse(JSON.stringify(products));
-        
+        console.log(b);
 
         // Add CORS headers
         const headers = {
@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 200,
           headers,
-          body: b,
+          body: JSON.stringify(b),
         };
       } catch (error) {
         // Return an error response if there was an issue processing the request
