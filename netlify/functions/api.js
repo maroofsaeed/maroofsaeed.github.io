@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
         const headers = {
           'Access-Control-Allow-Origin': 'https://parklane-city.com', // Replace * with the appropriate domain
           'Access-Control-Allow-Headers': 'Content-Type',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
         };
 
         // Return the data as the response
