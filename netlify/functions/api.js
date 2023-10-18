@@ -18,7 +18,7 @@ exports.handler = async (event, context) => {
         // Return the data as the response
         return {
           statusCode: 200,
-          
+          headers,
           body: JSON.stringify(b),
         };
       } catch (error) {
