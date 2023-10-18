@@ -38,10 +38,18 @@ exports.handler = async (event, context) => {
   
         // Save the data to a database or perform other necessary operations
         // ...
+
+        // Add CORS headers
+        const headers = {
+          'Access-Control-Allow-Origin': 'https://parklane-city.com', // Replace * with the appropriate domain
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json; charset=utf-8',
+        };
   
         // Return a success response
         return {
           statusCode: 200,
+          headers,
           body: JSON.stringify({ message: 'POST request processed successfully' }),
         };
       } catch (error) {
