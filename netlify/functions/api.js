@@ -4,15 +4,16 @@ exports.handler = async (event, context) => {
       try {
         // Process the GET request as needed
         //const data = require('./db.json');
+
+        console.log(event.queryStringParameters.cellnumber);
         
         var products = [{"name":"Pizza","price":"10","quantity":"7"}, {"name":"Cerveja","price":"12","quantity":"5"}, {"name":"Hamburguer","price":"10","quantity":"2"}, {"name":"Fraldas","price":"6","quantity":"2"}];
-        console.log(products);
+        //console.log(products);
         var b = JSON.parse(JSON.stringify(products));
-        console.log(b);
+        //console.log(b);
 
         
-        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/IsUserAuthenticated?MobileNo=0315-2020208&AccessCode=04461').then((res) => res.json());
-
+        
         // Add CORS headers
         const headers = {
           'Access-Control-Allow-Origin': 'https://parklane-city.com', // Replace * with the appropriate domain
@@ -20,12 +21,29 @@ exports.handler = async (event, context) => {
           'Content-Type': 'application/json; charset=utf-8',
         };
 
-        // Return the data as the response
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify(result),
-        };
+        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/IsUserAuthenticated?MobileNo=' + event.queryStringParameters.cellnumber + '&AccessCode=' + event.queryStringParameters.accesscode).then((res) => res.json());
+        
+        console.log(result.Status);
+
+        if(result.Status){
+          const result = await fetch('http://135.181.143.213:8097/ClientTransaction/GetSalesFromContactNo?MobileNo=' + event.queryStringParameters.cellnumber).then((res) => res.json());
+          
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify(result),
+          };
+
+        } else {
+          // Return a success response
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ error: 'Invalid auth Not Verified.' }),
+          };
+        }
+
+       
       } catch (error) {
         // Return an error response if there was an issue processing the request
         return {
