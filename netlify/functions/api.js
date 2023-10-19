@@ -26,12 +26,12 @@ exports.handler = async (event, context) => {
         console.log(result.Status);
 
         if(result.Status){
-          const result = await fetch('http://135.181.143.213:8097/ClientTransaction/GetSalesFromContactNo?MobileNo=' + event.queryStringParameters.cellnumber).then((res) => res.json());
+          const result1 = await fetch('http://135.181.143.213:8097/ClientTransaction/GetSalesFromContactNo?MobileNo=' + event.queryStringParameters.cellnumber).then((res) => res.json());
           
           return {
             statusCode: 200,
             headers,
-            body: JSON.stringify(result),
+            body: JSON.stringify(result1),
           };
 
         } else {
