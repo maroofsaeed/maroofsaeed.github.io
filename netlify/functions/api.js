@@ -39,9 +39,8 @@ exports.handler = async (event, context) => {
       try {
         // Parse the incoming JSON payload from the request body
         const requestBody = JSON.parse(event.body);
-  
-        // Save the data to a database or perform other necessary operations
-        // ...
+
+        console.log(requestBody.cellNumber);
 
         // Add CORS headers
         const headers = {
@@ -50,12 +49,31 @@ exports.handler = async (event, context) => {
           'Content-Type': 'application/json; charset=utf-8',
         };
   
-        // Return a success response
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ message: 'POST request processed successfully' }),
-        };
+        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/IsUserAuthenticated?MobileNo=' + requestBody.cellNumber + '&AccessCode=' + requestBody.accessCode).then((res) => res.json());
+        
+        console.log(result.Status);
+
+        if(result.Status){
+          const result = await fetch('http://135.181.143.213:8097/ClientTransaction/GetSalesFromContactNo?MobileNo=' + requestBody.cellNumber).then((res) => res.json());
+          
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify(result),
+          };
+
+        } else {
+          // Return a success response
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ error: 'Invalid auth Not Verified.' }),
+          };
+        }
+        
+        
+  
+        
       } catch (error) {
         // Return an error response if there was an issue processing the request
         return {
