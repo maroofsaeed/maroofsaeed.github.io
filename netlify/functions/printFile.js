@@ -1,4 +1,8 @@
 const fetch = require('node-fetch');
+const base64 = require('base64topdf');
+const fs = require('fs');
+const axios = require('axios');
+
 exports.handler = async (event, context) => {
     if (event.httpMethod === 'GET') {
       try {
@@ -11,23 +15,38 @@ exports.handler = async (event, context) => {
         const headers = {
           'Access-Control-Allow-Origin': 'https://parklane-city.com', // Replace * with the appropriate domain
           'Access-Control-Allow-Headers': 'Content-Type',
-          'Content-Type': 'application/pdf',
+          'Content-Type': 'application/json',
         };
 
         
         const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: '2023-10-23', ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
 
-        const result = fetch('http://135.181.143.213:8097/ClientTransaction/PrintClientTransactionForWeb', {
+        console.log(JSON.stringify(data));
+
+        var base64Str;
+
+        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/PrintClientTransactionForWeb', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/octet-stream'
           },
           body: JSON.stringify(data),
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              return response.status.toString()
+          }
+          console.log("oay opay");
+          //console.log(response);
+          return response.arrayBuffer()
+          })
           .then((data) => {
-            // Handle the response data
-            console.log(data);
+            base64Str = Buffer.from(data).toString('base64');
+                    //base64.base64Decode(base64Str, "fsd.pdf");
+              console.log("hello there");
+
+              
           })
           .catch((error) => {
             // Handle any errors
@@ -35,15 +54,15 @@ exports.handler = async (event, context) => {
           });
         
         
-        
-        //console.log(result.Status);
+          //const contents = fs.readFileSync('fsd.pdf', {encoding: 'base64'});
+       
 
         
           // Return a success response
           return {
             statusCode: 200,
             headers,
-            body: result,
+            body: JSON.stringify({base64Str: base64Str}),
           };
         
 
