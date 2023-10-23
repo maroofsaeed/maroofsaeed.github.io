@@ -18,8 +18,13 @@ exports.handler = async (event, context) => {
           'Content-Type': 'application/json',
         };
 
+        let date_time = new Date();
+
+        let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+
+        let date = ("0" + date_time.getDate()).slice(-2);
         
-        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: '2023-10-23', ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
+        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: date_time.getFullYear() + '-' + month + '-' + date, ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
 
         console.log(JSON.stringify(data));
 
