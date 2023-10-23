@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
         };
 
         
-        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: '', ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
+        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: '2023-10-23', ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
 
         const result = fetch('http://135.181.143.213:8097/ClientTransaction/PrintClientTransactionForWeb', {
           method: 'POST',
