@@ -24,13 +24,13 @@ exports.handler = async (event, context) => {
 
         let date = ("0" + date_time.getDate()).slice(-2);
         
-        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: date_time.getFullYear() + '-' + month + '-' + date, ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID};
+        const data = { SaleID: event.queryStringParameters.SaleID, LocationID: event.queryStringParameters.LocationID, CompanyID: event.queryStringParameters.CompanyID, ToDate: date_time.getFullYear() + '-' + month + '-' + date, ReportType: 'Knock Wise', PartyID: event.queryStringParameters.PartyID, CompanyName: event.queryStringParameters.CompanyName};
 
         console.log(JSON.stringify(data));
 
         var base64Str;
 
-        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/PrintClientTransactionForWeb', {
+        const result = await fetch('http://135.181.143.213:8097/ClientTransaction/PrintClientTransaction_PLCWeb', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
